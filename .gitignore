@@ -44,3 +44,6 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# scratch cache from delegated AI tool calls
+.firecrawl/

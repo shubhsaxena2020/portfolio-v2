@@ -9,7 +9,7 @@ export function MarqueeHero() {
           {Array.from({ length: 6 }).map((_, i) => (
             <span
               key={i}
-              className="mx-6 font-display text-[10rem] font-black leading-none tracking-tight text-foreground sm:text-[14rem] lg:text-[18rem] select-none"
+              className="mx-6 font-display text-[14rem] leading-none tracking-tight text-foreground sm:text-[19.5rem] lg:text-[25rem] select-none"
             >
               SHUBH SAXENA
             </span>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Newsreader } from "next/font/google";
+import { Geist, Geist_Mono, Big_Shoulders } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeSwitcher } from "@/components/theme-switcher";
@@ -15,11 +15,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
+const bigShoulders = Big_Shoulders({
+  variable: "--font-big-shoulders",
   subsets: ["latin"],
   weight: "variable",
-  style: ["normal", "italic"],
   axes: ["opsz"],
 });
 
@@ -38,7 +37,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${bigShoulders.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ThemeProvider
