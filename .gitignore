@@ -36,6 +36,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# raw drafting material and personal documents — not used by the build
+/assets/source/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel
