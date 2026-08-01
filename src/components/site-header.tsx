@@ -19,7 +19,7 @@ export function SiteHeader({ themeSwitcherSlot }: SiteHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+    <header className="fixed top-4 inset-x-4 z-50 sm:top-6 sm:inset-x-6 rounded-2xl border border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/80 shadow-sm">
       <nav className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
         <Link href="/" className="font-semibold text-sm text-foreground hover:text-accent transition-colors">
           Shubh Saxena
@@ -50,7 +50,7 @@ export function SiteHeader({ themeSwitcherSlot }: SiteHeaderProps) {
 
       {/* Mobile dropdown */}
       {mobileOpen && (
-        <div className="sm:hidden border-b border-border bg-background/95 backdrop-blur">
+        <div className="sm:hidden rounded-b-2xl border-t border-border bg-background/95 backdrop-blur">
           <ul className="flex flex-col gap-1 px-6 py-4 text-sm">
             {NAV_LINKS.map(({ href, label }) => (
               <li key={href}>

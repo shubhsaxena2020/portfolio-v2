@@ -55,10 +55,26 @@ body {
 }
 
 .animate-marquee {
-  animation: marquee 18.33s linear infinite;
+  animation: marquee 11s linear infinite;
   width: max-content;
 }
 
 .font-display {
   font-variation-settings: "wght" 800, "opsz" 48;
+}
+
+@keyframes scroll-arrow-pulse {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-scroll-arrow {
+  animation: scroll-arrow-pulse 2s ease-in-out infinite;
 }

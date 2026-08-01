@@ -146,7 +146,7 @@ export default function Home() {
       {/* About */}
       <section
         id="about"
-        className="scroll-mt-16 border-t border-border px-6 py-24 sm:px-10 lg:px-16"
+        className="scroll-mt-28 border-t border-border px-6 py-24 sm:px-10 lg:px-16"
       >
         <div className="mx-auto w-full max-w-5xl">
           <ScrollReveal>
@@ -186,7 +186,7 @@ export default function Home() {
       {/* Case Studies */}
       <section
         id="work"
-        className="scroll-mt-16 border-t border-border px-6 py-24 sm:px-10 lg:px-16"
+        className="scroll-mt-28 border-t border-border px-6 py-24 sm:px-10 lg:px-16"
       >
         <div className="mx-auto w-full max-w-5xl">
           <ScrollReveal>
@@ -242,7 +242,7 @@ export default function Home() {
       {/* Skills & Tech Stack */}
       <section
         id="skills"
-        className="scroll-mt-16 border-t border-border px-6 py-24 sm:px-10 lg:px-16"
+        className="scroll-mt-28 border-t border-border px-6 py-24 sm:px-10 lg:px-16"
       >
         <div className="mx-auto w-full max-w-5xl">
           <ScrollReveal>
@@ -270,7 +270,7 @@ export default function Home() {
       {/* Contact */}
       <section
         id="contact"
-        className="scroll-mt-16 border-t border-border px-6 py-24 sm:px-10 lg:px-16"
+        className="scroll-mt-28 border-t border-border px-6 py-24 sm:px-10 lg:px-16"
       >
         <div className="mx-auto w-full max-w-5xl">
           <ScrollReveal>
