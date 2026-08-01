@@ -36,10 +36,25 @@ html {
   --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-bodoni-moda);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-16.6667%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 18.33s linear infinite;
+  width: max-content;
 }

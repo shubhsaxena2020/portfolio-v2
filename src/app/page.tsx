@@ -1,5 +1,5 @@
 import { ScrollReveal } from "@/components/scroll-reveal";
-import { VoxelHero } from "@/components/voxel-hero";
+import { MarqueeHero } from "@/components/marquee-hero";
 
 type CaseStudy = {
   title: string;
@@ -139,32 +139,8 @@ export default function Home() {
   return (
     <main className="flex-1">
       {/* Hero */}
-      <section className="flex min-h-[90vh] flex-col justify-center px-6 py-24 sm:px-10 lg:px-16">
-        <div className="mx-auto grid w-full max-w-5xl gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-center">
-          <ScrollReveal>
-            <p className="mb-6 text-sm font-medium tracking-widest text-muted uppercase">
-              Shubh Saxena
-            </p>
-            <h1 className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-              Engineering that ships
-              <span className="text-muted">—and holds up under real use.</span>
-            </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
-              I&apos;m Shubh Saxena. I build through AI-assisted development
-              workflows, with work spanning a local-first knowledge system
-              backed by 264 passing tests, a published verification-first
-              multi-agent framework, and a live client website.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.15}>
-            <div className="overflow-hidden rounded-lg border border-border">
-              <VoxelHero />
-            </div>
-            <p className="mt-3 text-center text-sm text-muted">
-              Hover to see the wave.
-            </p>
-          </ScrollReveal>
-        </div>
+      <section className="relative">
+        <MarqueeHero />
       </section>
 
       {/* About */}
@@ -178,6 +154,12 @@ export default function Home() {
               About
             </h2>
             <div className="space-y-6 text-lg leading-relaxed sm:text-xl">
+              <p>
+                I&apos;m Shubh Saxena. I build through AI-assisted development
+                workflows, with work spanning a local-first knowledge system
+                backed by 264 passing tests, a published verification-first
+                multi-agent framework, and a live client website.
+              </p>
               <p>
                 I build working systems with measurable outcomes. My projects
                 span local-first knowledge retrieval, computer vision,
