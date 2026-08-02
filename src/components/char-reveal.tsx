@@ -5,6 +5,8 @@ import { useEffect, useRef, useSyncExternalStore } from 'react';
 interface CharRevealProps {
   text: string;
   className?: string;
+  as?: 'div' | 'h2';
+  once?: boolean;
 }
 
 function subscribeReducedMotion(callback: () => void) {
@@ -21,8 +23,13 @@ function getReducedMotionServerSnapshot() {
   return false;
 }
 
-export function CharReveal({ text, className }: CharRevealProps) {
-  const paragraphRefs = useRef<Array<HTMLParagraphElement | null>>([]);
+export function CharReveal({
+  text,
+  className,
+  as: Component = 'div',
+  once = true,
+}: CharRevealProps) {
+  const paragraphRefs = useRef<Array<HTMLElement | null>>([]);
   const prefersReducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
     getReducedMotionSnapshot,
@@ -37,14 +44,25 @@ export function CharReveal({ text, className }: CharRevealProps) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          const paragraph = entry.target as HTMLParagraphElement;
-          paragraph.style.opacity = '1';
+          const paragraph = entry.target as HTMLElement;
           const chars = Array.from(
             paragraph.querySelectorAll<HTMLElement>('.char')
           );
 
+          if (!once) {
+            paragraph.style.opacity = '1';
+            chars.forEach((char, index) => {
+              char.style.transition = `transform 0.55s ease ${index * 45}ms`;
+              char.style.transform = entry.isIntersecting
+                ? 'translateY(0)'
+                : 'translateY(110%)';
+            });
+            return;
+          }
+
+          if (!entry.isIntersecting) return;
+
+          paragraph.style.opacity = '1';
           chars.forEach((char) => {
             char.style.cssText =
               'display:inline-block; transform:translateY(110%); transition:none';
@@ -73,12 +91,14 @@ export function CharReveal({ text, className }: CharRevealProps) {
       observer.disconnect();
       timers.forEach(clearTimeout);
     };
-  }, [prefersReducedMotion, text]);
+  }, [once, prefersReducedMotion, text]);
+
+  const TextElement = Component === 'h2' ? 'span' : 'p';
 
   return (
-    <div className={className}>
+    <Component className={className}>
       {paragraphs.map((paragraph, paragraphIndex) => (
-        <p
+        <TextElement
           key={paragraph}
           ref={(element) => {
             paragraphRefs.current[paragraphIndex] = element;
@@ -119,8 +139,8 @@ export function CharReveal({ text, className }: CharRevealProps) {
               ))}
             </span>
           ))}
-        </p>
+        </TextElement>
       ))}
-    </div>
+    </Component>
   );
 }

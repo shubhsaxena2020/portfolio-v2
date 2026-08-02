@@ -47,3 +47,6 @@ next-env.d.ts
 
 # scratch cache from delegated AI tool calls
 .firecrawl/
+
+# scratch verification screenshots from delegated AI tool calls
+/output/

@@ -6,19 +6,24 @@ import { MarqueeHero } from '@/components/marquee-hero';
 import { AboutSection } from '@/components/about-section';
 
 export function HeroAboutSection() {
-  const aboutRef = useRef<HTMLElement>(null);
+  const aboutStageRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
-    target: aboutRef,
+    target: aboutStageRef,
     offset: ['start end', 'start start'],
   });
   const marqueeOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
-    <div className="relative">
-      <section className="sticky top-0">
+    <>
+      <section className="sticky top-0 z-0">
         <MarqueeHero marqueeOpacity={marqueeOpacity} />
       </section>
-      <AboutSection ref={aboutRef} />
-    </div>
+      <section
+        ref={aboutStageRef}
+        className="sticky top-0 z-10 flex h-dvh min-h-[560px] items-center overflow-hidden bg-[repeating-linear-gradient(0deg,var(--border)_0_1px,transparent_1px_32px),repeating-linear-gradient(90deg,var(--border)_0_1px,transparent_1px_32px)] bg-background"
+      >
+        <AboutSection />
+      </section>
+    </>
   );
 }
