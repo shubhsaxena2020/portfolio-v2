@@ -1,5 +1,7 @@
+import { ArrowDownRight } from "lucide-react";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { HeroAboutSection } from "@/components/hero-about-section";
+import { ScrollMarquee } from "@/components/scroll-marquee";
 
 type CaseStudy = {
   title: string;
@@ -100,6 +102,18 @@ const caseStudies: CaseStudy[] = [
   },
 ];
 
+const projectIndustries: string[][] = [
+  ["AI", "Desktop", "Knowledge"],
+  ["3D", "ComputerVision", "Ecommerce"],
+  ["AI", "DeveloperTools", "Analytics"],
+  ["AI", "OpenSource", "Agents"],
+  ["Fitness", "Web", "LocalBusiness"],
+];
+
+function getSpecValue(project: CaseStudy, label: string) {
+  return project.specs.find(([specLabel]) => specLabel === label)?.[1] ?? "—";
+}
+
 const skillCategories: [string, string[]][] = [
   [
     "AI-Assisted Development",
@@ -141,27 +155,88 @@ export default function Home() {
       {/* Hero, pinned so About slides up over it */}
       <HeroAboutSection />
 
-      {/* Case Studies */}
+      {/* Scroll-linked statement between About and Projects */}
+      <ScrollMarquee />
+
+      {/* Projects */}
       <section
         id="work"
-        className="relative z-20 scroll-mt-28 border-t border-border bg-background px-6 py-24 sm:px-10 lg:px-16"
+        className="relative z-20 scroll-mt-28 border-t border-border bg-background px-6 py-24 sm:px-10 sm:py-28 lg:px-16"
       >
-        <div className="mx-auto w-full max-w-5xl">
+        <div className="mx-auto w-full max-w-7xl">
           <ScrollReveal>
-            <h2 className="mb-12 text-sm font-medium tracking-widest text-muted uppercase">
-              Case Studies
-            </h2>
+            <div className="mb-14 flex items-end justify-between gap-6 border-b border-border pb-8 sm:mb-16">
+              <h2 className="font-display text-7xl leading-none font-black tracking-tight sm:text-8xl lg:text-9xl">
+                Projects
+              </h2>
+              <span className="mb-1 flex size-11 shrink-0 items-center justify-center rounded-full border border-border sm:size-12">
+                <ArrowDownRight className="size-5" aria-hidden="true" />
+              </span>
+            </div>
           </ScrollReveal>
-          <div className="space-y-20">
+          <div className="divide-y divide-border border-b border-border">
             {caseStudies.map((project, index) => (
               <ScrollReveal key={project.title} delay={Math.min(index * 0.1, 0.3)}>
-                <article className="group rounded-lg border border-transparent p-6 -m-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5">
-                  <h3 className="text-2xl font-semibold tracking-tight transition-colors duration-200 group-hover:text-accent sm:text-3xl">
-                    {project.title}
-                  </h3>
-                  <p className="mt-3 max-w-3xl text-lg text-muted">
-                    {project.tagline}
-                  </p>
+                <article
+                  data-project-row
+                  className="group py-10 sm:py-14"
+                >
+                  <div className="grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)] lg:items-start lg:gap-12">
+                    <div>
+                      <p className="font-mono text-xs tracking-[0.2em] text-muted uppercase">
+                        Project {String(index + 1).padStart(2, "0")}
+                      </p>
+                      <h3 className="mt-3 max-w-4xl text-3xl font-semibold tracking-tight transition-colors duration-200 group-hover:text-accent sm:text-4xl">
+                        {project.title}
+                      </h3>
+                    </div>
+                    <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-lg lg:pt-7">
+                      {project.tagline}
+                    </p>
+                  </div>
+
+                  <dl className="mt-8 grid grid-cols-2 border-y border-border lg:grid-cols-[0.75fr_1fr_1.4fr_1.2fr]">
+                    <div className="border-r border-b border-border py-5 pr-4 lg:border-b-0">
+                      <dt data-project-meta-header className="font-mono text-[0.68rem] tracking-[0.18em] text-muted uppercase">
+                        Timeframe
+                      </dt>
+                      <dd className="mt-2 text-sm leading-relaxed">
+                        {getSpecValue(project, "Status")}
+                      </dd>
+                    </div>
+                    <div className="border-b border-border py-5 pl-4 lg:border-r lg:border-b-0 lg:px-5">
+                      <dt data-project-meta-header className="font-mono text-[0.68rem] tracking-[0.18em] text-muted uppercase">
+                        Discipline
+                      </dt>
+                      <dd className="mt-2 text-sm leading-relaxed">
+                        {getSpecValue(project, "Discipline")}
+                      </dd>
+                    </div>
+                    <div className="border-r border-border py-5 pr-4 lg:px-5">
+                      <dt data-project-meta-header className="font-mono text-[0.68rem] tracking-[0.18em] text-muted uppercase">
+                        Tools
+                      </dt>
+                      <dd className="mt-2 text-sm leading-relaxed">
+                        {getSpecValue(project, "Tools")}
+                      </dd>
+                    </div>
+                    <div className="py-5 pl-4 lg:pl-5">
+                      <dt data-project-meta-header className="font-mono text-[0.68rem] tracking-[0.18em] text-muted uppercase">
+                        Industry
+                      </dt>
+                      <dd className="mt-2 flex flex-wrap gap-1.5">
+                        {projectIndustries[index].map((industry) => (
+                          <span
+                            key={industry}
+                            className="rounded-full border border-border px-2.5 py-1 font-mono text-[0.65rem] tracking-wide uppercase"
+                          >
+                            #{industry}
+                          </span>
+                        ))}
+                      </dd>
+                    </div>
+                  </dl>
+
                   <div className="mt-8 grid gap-8 sm:grid-cols-3">
                     <div>
                       <h4 className="mb-2 text-sm font-medium tracking-widest text-muted uppercase">
@@ -182,14 +257,6 @@ export default function Home() {
                       <p className="leading-relaxed">{project.outcome}</p>
                     </div>
                   </div>
-                  <dl className="mt-8 grid gap-x-8 gap-y-2 border-t border-border pt-6 sm:grid-cols-2">
-                    {project.specs.map(([label, detail]) => (
-                      <div key={label} className="flex gap-2 text-sm">
-                        <dt className="min-w-28 text-muted">{label}</dt>
-                        <dd>{detail}</dd>
-                      </div>
-                    ))}
-                  </dl>
                 </article>
               </ScrollReveal>
             ))}
