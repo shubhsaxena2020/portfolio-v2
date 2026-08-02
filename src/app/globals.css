@@ -85,3 +85,13 @@ body {
 .animate-scroll-arrow {
   animation: scroll-arrow-pulse 2s ease-in-out infinite;
 }
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.typewriter-cursor {
+  animation: caret-blink 1s steps(1) infinite;
+}

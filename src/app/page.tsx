@@ -1,6 +1,5 @@
 import { ScrollReveal } from "@/components/scroll-reveal";
-import { MarqueeHero } from "@/components/marquee-hero";
-import { AboutSection } from "@/components/about-section";
+import { HeroAboutSection } from "@/components/hero-about-section";
 
 type CaseStudy = {
   title: string;
@@ -140,14 +139,7 @@ export default function Home() {
   return (
     <main className="flex-1">
       {/* Hero, pinned so About slides up over it */}
-      <div className="relative">
-        <section className="sticky top-0">
-          <MarqueeHero />
-        </section>
-
-        {/* About */}
-        <AboutSection />
-      </div>
+      <HeroAboutSection />
 
       {/* Case Studies */}
       <section

@@ -1,11 +1,27 @@
-import { ArrowDown } from "lucide-react";
+'use client';
 
-export function MarqueeHero() {
+import { ArrowDown } from 'lucide-react';
+import { motion, type MotionValue } from 'motion/react';
+
+interface MarqueeHeroProps {
+  marqueeOpacity: MotionValue<number>;
+}
+
+export function MarqueeHero({ marqueeOpacity }: MarqueeHeroProps) {
   return (
     <div className="relative w-full h-dvh min-h-[560px] overflow-hidden bg-[repeating-linear-gradient(0deg,var(--border)_0_1px,transparent_1px_32px),repeating-linear-gradient(90deg,var(--border)_0_1px,transparent_1px_32px)] bg-background">
       <h1 className="sr-only">Shubh Saxena</h1>
-      <div aria-hidden="true" className="absolute inset-0 flex items-center overflow-hidden">
-        <div className="flex animate-marquee whitespace-nowrap motion-reduce:animate-none">
+      <motion.div
+        aria-hidden="true"
+        style={{ opacity: marqueeOpacity }}
+        className="absolute inset-0 flex items-center overflow-hidden"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+          className="flex animate-marquee whitespace-nowrap motion-reduce:animate-none"
+        >
           {Array.from({ length: 6 }).map((_, i) => (
             <span
               key={i}
@@ -14,8 +30,8 @@ export function MarqueeHero() {
               SHUBH SAXENA
             </span>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       <div className="pointer-events-none absolute inset-0 flex items-end justify-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}

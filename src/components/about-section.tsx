@@ -1,40 +1,33 @@
-export function AboutSection() {
+import { forwardRef } from 'react';
+import { MoodEmoji } from '@/components/mood-emoji';
+import { TypewriterReveal } from '@/components/typewriter-reveal';
+
+const ABOUT_TEXT = `I'm Shubh Saxena, a developer focused on building AI-powered tools, automation systems, and modern web applications.
+
+My work includes multi-agent systems, local-first knowledge systems, computer vision, browser-based 3D, and production web applications. I build software with a focus on reliability, maintainability, and practical outcomes, using AI to accelerate development—not replace engineering judgment.
+
+Currently pursuing a BCA in Computer Science at PSIT College of Higher Education, Kanpur.`;
+
+export const AboutSection = forwardRef<HTMLElement>(function AboutSection(
+  _props,
+  ref
+) {
   return (
     <section
+      ref={ref}
       id="about"
       className="relative z-10 flex min-h-screen items-center bg-foreground px-6 text-background sm:px-10 lg:px-16"
     >
-      <div className="mx-auto w-full max-w-5xl py-24">
-        <h2 className="mb-8 text-sm font-medium tracking-widest text-background/60 uppercase">
+      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 py-24 lg:grid-cols-[280px_1fr] lg:gap-16">
+        <h2 className="flex items-center text-6xl font-bold tracking-tight sm:text-7xl">
           About
+          <MoodEmoji />
         </h2>
-        <div className="space-y-6 text-lg leading-relaxed sm:text-xl">
-          <p>
-            I&apos;m Shubh Saxena. I build through AI-assisted development
-            workflows, with work spanning a local-first knowledge system
-            backed by 264 passing tests, a published verification-first
-            multi-agent framework, and a live client website.
-          </p>
-          <p>
-            I build working systems with measurable outcomes. My projects
-            span local-first knowledge retrieval, computer vision,
-            browser-based 3D rendering, Windows usage analytics, multi-agent
-            orchestration, and client web delivery.
-          </p>
-          <p>
-            I architect, build, debug, test, and refine software through a
-            disciplined engineering process, using AI-assisted tools to
-            amplify—not replace—my judgment. That approach powers projects
-            from Cortex&apos;s auto-linking memory graph to a live monitoring
-            application covering five AI CLI tools.
-          </p>
-          <p>
-            At 17, I began the BCA-CSE program at PSIT College of Higher
-            Education, Kanpur, in August 2026. I completed CBSE Class XII in
-            2026.
-          </p>
-        </div>
+        <TypewriterReveal
+          text={ABOUT_TEXT}
+          className="max-w-2xl space-y-6 text-lg leading-relaxed font-medium sm:text-xl"
+        />
       </div>
     </section>
   );
-}
+});
