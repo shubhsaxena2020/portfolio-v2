@@ -48,6 +48,11 @@ export default function RootLayout({
           disableTransitionOnChange
           themes={["light", "dark", "jungle"]}
         >
+          {/* Fixed viewport-pinned grid-pattern backdrop — immune to sticky/fixed-bg desync */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 z-0 bg-background bg-[repeating-linear-gradient(0deg,var(--border)_0_1px,transparent_1px_32px),repeating-linear-gradient(90deg,var(--border)_0_1px,transparent_1px_32px)]"
+          />
           <SiteHeader themeSwitcherSlot={<ThemeSwitcher />} />
           {children}
         </ThemeProvider>

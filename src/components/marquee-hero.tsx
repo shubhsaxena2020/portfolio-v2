@@ -9,7 +9,7 @@ interface MarqueeHeroProps {
 
 export function MarqueeHero({ marqueeOpacity }: MarqueeHeroProps) {
   return (
-    <div className="relative w-full h-dvh min-h-[560px] overflow-hidden bg-[repeating-linear-gradient(0deg,var(--border)_0_1px,transparent_1px_32px),repeating-linear-gradient(90deg,var(--border)_0_1px,transparent_1px_32px)] bg-background">
+    <div className="relative w-full h-dvh min-h-[560px] overflow-hidden">
       <h1 className="sr-only">Shubh Saxena</h1>
       <motion.div
         aria-hidden="true"

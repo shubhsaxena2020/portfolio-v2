@@ -20,7 +20,7 @@ export function HeroAboutSection() {
       </section>
       <section
         ref={aboutStageRef}
-        className="sticky top-0 z-10 flex h-dvh min-h-[560px] items-center overflow-hidden bg-[repeating-linear-gradient(0deg,var(--border)_0_1px,transparent_1px_32px),repeating-linear-gradient(90deg,var(--border)_0_1px,transparent_1px_32px)] bg-background"
+        className="sticky top-0 z-10 flex min-h-dvh w-full items-stretch"
       >
         <AboutSection />
       </section>

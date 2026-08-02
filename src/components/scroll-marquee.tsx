@@ -94,7 +94,7 @@ export function ScrollMarquee() {
       <motion.div
         style={entranceStyle}
         data-scroll-marquee-reveal
-        className="mx-auto w-full max-w-7xl overflow-hidden rounded-2xl border border-border bg-[repeating-linear-gradient(0deg,var(--border)_0_1px,transparent_1px_32px),repeating-linear-gradient(90deg,var(--border)_0_1px,transparent_1px_32px)] bg-background py-7 shadow-[0_20px_70px_-48px_var(--foreground)] sm:py-9"
+        className="mx-auto w-full max-w-7xl overflow-hidden rounded-2xl border border-border bg-background py-7 shadow-[0_20px_70px_-48px_var(--foreground)] sm:py-9"
       >
         <p className="sr-only">{MARQUEE_PHRASE}</p>
         <div

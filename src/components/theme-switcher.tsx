@@ -1,8 +1,9 @@
 "use client";
 
+import { useRef, useSyncExternalStore } from "react";
+import { flushSync } from "react-dom";
 import { Leaf, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useSyncExternalStore } from "react";
 
 const themeOptions = [
   { name: "light", label: "Light", icon: Sun },
@@ -17,6 +18,22 @@ const buttonStyles =
 
 const subscribe = () => () => {};
 
+function subscribeReducedMotion(callback: () => void) {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function getReducedMotionServerSnapshot() {
+  return false;
+}
+
+const VT_DURATION = 500;
+
 export function ThemeSwitcher() {
   const mounted = useSyncExternalStore(
     subscribe,
@@ -24,6 +41,13 @@ export function ThemeSwitcher() {
     () => false,
   );
   const { theme, setTheme } = useTheme();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const isTransitioningRef = useRef(false);
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot,
+  );
 
   if (!mounted) {
     return (
@@ -46,14 +70,85 @@ export function ThemeSwitcher() {
   const Icon = currentTheme.icon;
 
   function cycleTheme() {
-    document.documentElement.classList.remove(...themeNames);
-    document.documentElement.classList.add(nextTheme.name);
-    setTheme(nextTheme.name);
+    const button = buttonRef.current;
+    const canAnimate =
+      !prefersReducedMotion &&
+      typeof document.startViewTransition === "function" &&
+      button &&
+      !isTransitioningRef.current;
+
+    const applyTheme = () => {
+      document.documentElement.classList.remove(...themeNames);
+      document.documentElement.classList.add(nextTheme.name);
+      setTheme(nextTheme.name);
+    };
+
+    if (!canAnimate) {
+      applyTheme();
+      return;
+    }
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const { top, left, width, height } = button.getBoundingClientRect();
+    const cx = left + width / 2;
+    const cy = top + height / 2;
+    const maxRadius = Math.hypot(
+      Math.max(cx, viewportWidth - cx),
+      Math.max(cy, viewportHeight - cy),
+    );
+
+    const toX = (x: number) => `${(x / viewportWidth) * 100}%`;
+    const toY = (y: number) => `${(y / viewportHeight) * 100}%`;
+    const toRadius = (r: number) =>
+      `${(r / (Math.hypot(viewportWidth, viewportHeight) / Math.SQRT2)) * 100}%`;
+
+    const clipPathFrom = `circle(0px at ${toX(cx)} ${toY(cy)})`;
+    const clipPathTo = `circle(${toRadius(maxRadius)} at ${toX(cx)} ${toY(cy)})`;
+
+    isTransitioningRef.current = true;
+    const root = document.documentElement;
+    root.dataset.themeVt = "active";
+    let revealAnimation: Animation | undefined;
+
+    const cleanup = () => {
+      isTransitioningRef.current = false;
+      delete root.dataset.themeVt;
+      revealAnimation?.cancel();
+    };
+
+    const transition = document.startViewTransition(() => {
+      flushSync(applyTheme);
+    });
+
+    if (typeof transition?.finished?.finally === "function") {
+      transition.finished.finally(cleanup).catch(() => {});
+    } else {
+      cleanup();
+    }
+
+    const ready = transition?.ready;
+    if (ready && typeof ready.then === "function") {
+      ready
+        .then(() => {
+          revealAnimation = document.documentElement.animate(
+            { clipPath: [clipPathFrom, clipPathTo] },
+            {
+              duration: VT_DURATION,
+              easing: "ease-in-out",
+              fill: "forwards",
+              pseudoElement: "::view-transition-new(root)",
+            },
+          );
+        })
+        .catch(() => {});
+    }
   }
 
   return (
     <button
       type="button"
+      ref={buttonRef}
       onClick={cycleTheme}
       aria-label={`${currentTheme.label} theme. Switch to ${nextTheme.label} theme.`}
       title={`Switch to ${nextTheme.label} theme`}

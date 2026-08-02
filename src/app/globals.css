@@ -16,6 +16,16 @@ html {
   --muted: #6b6b6b;
   --border: #e5e5e5;
   --accent: #2f5fff;
+  --project-cortex: #b38f00;
+  --project-cortex-foreground: #0a0a0a;
+  --project-furniture-3d: #e23b3b;
+  --project-furniture-3d-foreground: #ffffff;
+  --project-ai-tools-monitor: #087be8;
+  --project-ai-tools-monitor-foreground: #ffffff;
+  --project-multi-ai-framework: #3f8152;
+  --project-multi-ai-framework-foreground: #ffffff;
+  --project-fbc-arena: #d65ab8;
+  --project-fbc-arena-foreground: #0a0a0a;
 }
 
 .dark {
@@ -24,6 +34,16 @@ html {
   --muted: #9a9aa2;
   --border: #26262b;
   --accent: #5b8bff;
+  --project-cortex: #74691f;
+  --project-cortex-foreground: #f4f4f5;
+  --project-furniture-3d: #934849;
+  --project-furniture-3d-foreground: #f4f4f5;
+  --project-ai-tools-monitor: #2e6193;
+  --project-ai-tools-monitor-foreground: #f4f4f5;
+  --project-multi-ai-framework: #3f6f4d;
+  --project-multi-ai-framework-foreground: #f4f4f5;
+  --project-fbc-arena: #815476;
+  --project-fbc-arena-foreground: #f4f4f5;
 }
 
 .jungle {
@@ -32,6 +52,16 @@ html {
   --muted: #b7c5b8;
   --border: #748d7d;
   --accent: #f4b942;
+  --project-cortex: #796b24;
+  --project-cortex-foreground: #f5f1e6;
+  --project-furniture-3d: #9a5843;
+  --project-furniture-3d-foreground: #f5f1e6;
+  --project-ai-tools-monitor: #476f7e;
+  --project-ai-tools-monitor-foreground: #f5f1e6;
+  --project-multi-ai-framework: #55714b;
+  --project-multi-ai-framework-foreground: #f5f1e6;
+  --project-fbc-arena: #835f78;
+  --project-fbc-arena-foreground: #f5f1e6;
 }
 
 @theme inline {
@@ -65,6 +95,23 @@ body {
   width: max-content;
 }
 
+@keyframes orbit {
+  0% {
+    transform: rotate(calc(var(--angle) * 1deg))
+      translateY(calc(var(--radius) * 1px))
+      rotate(calc(var(--angle) * -1deg));
+  }
+  100% {
+    transform: rotate(calc(var(--angle) * 1deg + 360deg))
+      translateY(calc(var(--radius) * 1px))
+      rotate(calc((var(--angle) * -1deg) - 360deg));
+  }
+}
+
+.animate-orbit {
+  animation: orbit calc(var(--duration) * 1s) linear infinite;
+}
+
 .font-display {
   font-variation-settings: "wght" 250, "opsz" 72;
   letter-spacing: 0.015em;
@@ -91,6 +138,13 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .animate-orbit {
+    animation: none;
+    transform: rotate(calc(var(--angle) * 1deg))
+      translateY(calc(var(--radius) * 1px))
+      rotate(calc(var(--angle) * -1deg));
+  }
+
   .text-animate {
     opacity: 1;
   }
@@ -99,4 +153,10 @@ body {
     transform: translateY(0) !important;
     transition: none !important;
   }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }

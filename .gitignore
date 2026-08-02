@@ -50,3 +50,7 @@ next-env.d.ts
 
 # scratch verification screenshots from delegated AI tool calls
 /output/
+
+# scratch cache from delegated AI Playwright MCP calls
+.playwright-mcp/
+.playwright-cli/
