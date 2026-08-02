@@ -86,12 +86,17 @@ body {
   animation: scroll-arrow-pulse 2s ease-in-out infinite;
 }
 
-@keyframes caret-blink {
-  50% {
-    opacity: 0;
-  }
+.text-animate {
+  opacity: 0;
 }
 
-.typewriter-cursor {
-  animation: caret-blink 1s steps(1) infinite;
+@media (prefers-reduced-motion: reduce) {
+  .text-animate {
+    opacity: 1;
+  }
+
+  .text-animate .char {
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
 }
